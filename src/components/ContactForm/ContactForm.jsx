@@ -1,17 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Label, Span, Button } from './ContactForm.styled';
+import { nanoid } from 'nanoid';
 
-export function ContactForm() {
+export function ContactForm({ ContactAdd }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
-  // const handleNameChange = e => {
-  //   setName(e.target.value);
-  // };
-  // const handleNumberChange = e => {
-  //   setNumber(e.target.value);
-  // };
   const handleChange = e => {
     const { name, value } = e.target;
     switch (name) {
@@ -25,24 +19,22 @@ export function ContactForm() {
         return;
     }
   };
-  // handleInputChange = e => {
-  //   this.setState({
-  //     [e.currentTarget.name]: e.currentTarget.value,
-  //   });
-  // };
+
   const hadleSubmit = e => {
     e.preventDefault();
 
-    this.props.ContactAdd(this.state.name, this.state.number);
+    ContactAdd({
+      id: nanoid(5),
+      name,
+      number,
+    });
 
-    // this.reset();
+    setName('');
+    setNumber('');
   };
-  // reset = () => {
-  //   this.setState({ name: '', number: '' });
-  // };
 
   return (
-    <Form onSubmit={hadleSubmit}>
+    <Form autoComplete="off" onSubmit={hadleSubmit}>
       <Label>
         <Span> Name</Span>
         <input
